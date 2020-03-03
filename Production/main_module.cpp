@@ -68,7 +68,7 @@ void MainModule::make_grid()
 
 bool MainModule::is_number(std::string s)
 {
-	const std::regex regex("[1-4][0-9]?|50?", std::regex_constants::ECMAScript);
+	const std::regex regex("[1-4][0-9]?|50|[1-9]", std::regex_constants::ECMAScript);
 	std::smatch base_match;
 	return std::regex_match(s, base_match, regex);
 }

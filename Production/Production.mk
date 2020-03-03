@@ -12,15 +12,15 @@ OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=Jacek Wójcik
+User                   :=jacek
 Date                   :=03/03/20
 CodeLitePath           :=/home/jacek/.codelite
-LinkerName             :=g++
-SharedObjectLinkerName :=g++ -shared -fPIC
+LinkerName             :=/usr/bin/x86_64-linux-gnu-g++
+SharedObjectLinkerName :=/usr/bin/x86_64-linux-gnu-g++ -shared -fPIC
 ObjectSuffix           :=.o
 DependSuffix           :=.o.d
-PreprocessSuffix       :=.o.i
-DebugSwitch            :=-gstab
+PreprocessSuffix       :=.i
+DebugSwitch            :=-g 
 IncludeSwitch          :=-I
 LibrarySwitch          :=-l
 OutputSwitch           :=-o 
@@ -31,7 +31,7 @@ OutputFile             :=$(IntermediateDirectory)/$(ProjectName)
 Preprocessors          :=$(PreprocessorSwitch)NDEBUG 
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
-PreprocessOnlySwitch   :=-E 
+PreprocessOnlySwitch   :=-E
 ObjectsFileList        :="Production.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
@@ -47,13 +47,13 @@ LibPath                := $(LibraryPathSwitch).
 ## Common variables
 ## AR, CXX, CC, AS, CXXFLAGS and CFLAGS can be overriden using an environment variables
 ##
-AR       := ar rcus
-CXX      := g++
-CC       := gcc
+AR       := /usr/bin/x86_64-linux-gnu-ar rcu
+CXX      := /usr/bin/x86_64-linux-gnu-g++
+CC       := /usr/bin/x86_64-linux-gnu-gcc
 CXXFLAGS :=  -O2 -Wall $(shell pkg-config --cflags gtkmm-3.0) $(Preprocessors)
 CFLAGS   :=  -O2 -Wall $(Preprocessors)
 ASFLAGS  := 
-AS       := as
+AS       := /usr/bin/x86_64-linux-gnu-as
 
 
 ##
