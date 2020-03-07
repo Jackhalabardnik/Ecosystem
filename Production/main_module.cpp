@@ -1,9 +1,20 @@
 #include "main_module.h"
 #include <iostream>
 
+
+Gtk::ApplicationWindow & MainModule::get_window()
+{
+	return *app_window;
+}
+
 MainModule::MainModule()  
+: width(30), height(30), is_running(false)
 {
 	get_gui_from_glade();
+	
+	
+	fill('W');
+	
 	connect_signals();
 }
 
@@ -29,6 +40,16 @@ void MainModule::get_gui_from_glade()
 void MainModule::connect_signals()
 {
 	setup_button->signal_clicked().connect(sigc::mem_fun(*this, &MainModule::make_grid));
+	
+	
+	
+	Glib::signal_timeout().connect(sigc::mem_fun(*this, &MainModule::v_quick_tick), 100);
+	Glib::signal_timeout().connect(sigc::mem_fun(*this, &MainModule::quick_tick), 250);
+	Glib::signal_timeout().connect(sigc::mem_fun(*this, &MainModule::normal_tick), 500);
+	Glib::signal_timeout().connect(sigc::mem_fun(*this, &MainModule::slow_tick), 1000);
+	
+	
+	
 }
 
 void MainModule::make_grid()
@@ -40,21 +61,10 @@ void MainModule::make_grid()
 	{
 		if(is_number(width_entry->get_text()) && is_number(height_entry->get_text()))
 		{
-			int width = string_to_int(width_entry->get_text());
-			int height = string_to_int(height_entry->get_text());
+			width = string_to_int(width_entry->get_text());
+			height = string_to_int(height_entry->get_text());
 			
-			std::string represenation;
-			
-			for(int i= 0; i< height; i++)
-			{
-				for (int j = 0; j< width; j++)
-				{
-					represenation += "@";
-				}
-				represenation += "\n";
-			}
-			
-			ecosystem_label->set_text(represenation);
+			fill('@');
 		}
 		else
 		{
@@ -82,8 +92,71 @@ int MainModule::string_to_int(std::string s)
 	return i;
 }
 
-Gtk::ApplicationWindow & MainModule::get_window()
+void MainModule::fill(char c)
 {
-	return *app_window;
+	std::string represenation;	
+	
+	for(int i= 0; i< height; i++)
+	{
+		for (int j = 0; j< width; j++)
+		{
+			represenation += c;
+		}
+		represenation += "\n";
+	}
+	
+	ecosystem_label->set_text(represenation);
+
 }
 
+void MainModule::swap()
+{
+	if(ecosystem_label->get_text()[0] == '+')
+	{
+		fill('-');
+	}
+	else
+	{
+		fill('+');
+	}
+}
+
+bool MainModule::v_quick_tick()
+{
+	if(v_quick_radio->get_active())
+	{
+		swap();
+	}
+	return true;
+}
+
+
+
+bool MainModule::quick_tick()
+{
+	if(quick_radio->get_active())
+	{
+		swap();
+	}
+	return true;
+}
+
+
+
+bool MainModule::normal_tick()
+{
+	if(normal_radio->get_active())
+	{
+		swap();
+	}
+	return true;
+}
+
+bool MainModule::slow_tick()
+{
+	if(slow_radio->get_active())
+	{
+		swap();
+	}
+	return true;
+}

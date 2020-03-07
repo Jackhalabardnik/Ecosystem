@@ -17,10 +17,17 @@ protected:
 	void connect_signals();
 	
 	void make_grid();
-	
 	bool is_number(std::string s);
-	
 	int string_to_int(std::string s);
+	
+	bool v_quick_tick();
+	bool quick_tick();
+	bool normal_tick();
+	bool slow_tick();
+	
+	void fill(char c);
+	
+	void swap();
 	
 	Gtk::Button *setup_button, *sp_button, *hash_button, *restart_button;
 	Gtk::Label *ecosystem_label;
@@ -28,4 +35,7 @@ protected:
 	Gtk::Entry * width_entry, *height_entry;
 	Gtk::RadioButton * v_quick_radio, *quick_radio, *normal_radio, *slow_radio;
 	Gtk::ApplicationWindow *app_window;
+
+	int width, height;
+	bool is_running;
 };
