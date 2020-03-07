@@ -41,15 +41,16 @@ void MainModule::connect_signals()
 {
 	setup_button->signal_clicked().connect(sigc::mem_fun(*this, &MainModule::make_grid));
 	
+	sp_button->signal_clicked().connect(sigc::mem_fun(*this, &MainModule::start_pause));
 	
+	hash_button->signal_clicked().connect(sigc::mem_fun(*this, &MainModule::hash));
+	
+	restart_button->signal_clicked().connect(sigc::mem_fun(*this, &MainModule::restart));
 	
 	Glib::signal_timeout().connect(sigc::mem_fun(*this, &MainModule::v_quick_tick), 100);
 	Glib::signal_timeout().connect(sigc::mem_fun(*this, &MainModule::quick_tick), 250);
 	Glib::signal_timeout().connect(sigc::mem_fun(*this, &MainModule::normal_tick), 500);
 	Glib::signal_timeout().connect(sigc::mem_fun(*this, &MainModule::slow_tick), 1000);
-	
-	
-	
 }
 
 void MainModule::make_grid()
@@ -123,7 +124,7 @@ void MainModule::swap()
 
 bool MainModule::v_quick_tick()
 {
-	if(v_quick_radio->get_active())
+	if(v_quick_radio->get_active() && is_running)
 	{
 		swap();
 	}
@@ -134,7 +135,7 @@ bool MainModule::v_quick_tick()
 
 bool MainModule::quick_tick()
 {
-	if(quick_radio->get_active())
+	if(quick_radio->get_active() && is_running)
 	{
 		swap();
 	}
@@ -145,7 +146,7 @@ bool MainModule::quick_tick()
 
 bool MainModule::normal_tick()
 {
-	if(normal_radio->get_active())
+	if(normal_radio->get_active() && is_running)
 	{
 		swap();
 	}
@@ -154,9 +155,35 @@ bool MainModule::normal_tick()
 
 bool MainModule::slow_tick()
 {
-	if(slow_radio->get_active())
+	if(slow_radio->get_active() && is_running)
 	{
 		swap();
 	}
 	return true;
+}
+
+void MainModule::start_pause()
+{
+	if(is_running)
+	{
+		is_running = false;
+		sp_button->set_label("Start");
+	}
+	else
+	{
+		is_running = true;
+		sp_button->set_label("Pause");
+	}
+}
+
+void MainModule::hash()
+{
+	fill('c');
+}
+
+void MainModule::restart()
+{
+	fill('W');
+	is_running = false;
+	sp_button->set_label("Start");
 }

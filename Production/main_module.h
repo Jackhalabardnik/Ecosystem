@@ -25,6 +25,10 @@ protected:
 	bool normal_tick();
 	bool slow_tick();
 	
+	void start_pause();
+	void hash();
+	void restart();
+	
 	void fill(char c);
 	
 	void swap();
