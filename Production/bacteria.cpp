@@ -1,11 +1,15 @@
 #include "bacteria.h"
 
 Bacteria::Bacteria()
-: organism_type(OrganismType::Bacteria) food_limit(5), food_level(0), age_limit(10), age(0);
+: Organism(OrganismType::bacteria, 5, 0, 10, 0)
 {
+	
 }
 
 Bacteria::~Bacteria()
 {
 }
 
+void Bacteria::take_action(std::vector<std::vector<std::shared_ptr<Organism> > > ecosystem, tuple_int position)
+{
+}

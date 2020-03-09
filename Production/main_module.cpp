@@ -8,14 +8,15 @@ Gtk::ApplicationWindow & MainModule::get_window()
 }
 
 MainModule::MainModule()  
-: width(30), height(30), is_running(false)
+: width(10), height(10), is_running(false)
 {
+	rng = std::mt19937(dev());
+	generator = std::uniform_int_distribution<std::mt19937::result_type>(0,3);
+	
 	get_gui_from_glade();
-	
-	
-	fill('W');
-	
 	connect_signals();
+	
+	hash_button->clicked();
 }
 
 void MainModule::get_gui_from_glade()
@@ -65,7 +66,7 @@ void MainModule::make_grid()
 			width = string_to_int(width_entry->get_text());
 			height = string_to_int(height_entry->get_text());
 			
-			fill('@');
+			hash_button->clicked();
 		}
 		else
 		{
@@ -93,7 +94,7 @@ int MainModule::string_to_int(std::string s)
 	return i;
 }
 
-void MainModule::fill(char c)
+void MainModule::draw()
 {
 	std::string represenation;	
 	
@@ -101,7 +102,26 @@ void MainModule::fill(char c)
 	{
 		for (int j = 0; j< width; j++)
 		{
-			represenation += c;
+			if(ecosystem[i][j]->is_alive() == false)
+			{
+				represenation += "+";
+				continue;
+			}
+			
+			switch (ecosystem[i][j]->get_type()) {
+				case 0:
+					represenation += "-";
+					break;
+				case 1:
+					represenation += "@";
+					break;
+				case 2:
+					represenation += "#";
+					break;
+				case 3:
+					represenation += "*";
+					break;
+			}
 		}
 		represenation += "\n";
 	}
@@ -110,23 +130,11 @@ void MainModule::fill(char c)
 
 }
 
-void MainModule::swap()
-{
-	if(ecosystem_label->get_text()[0] == '+')
-	{
-		fill('-');
-	}
-	else
-	{
-		fill('+');
-	}
-}
-
 bool MainModule::v_quick_tick()
 {
 	if(v_quick_radio->get_active() && is_running)
 	{
-		swap();
+		
 	}
 	return true;
 }
@@ -137,7 +145,7 @@ bool MainModule::quick_tick()
 {
 	if(quick_radio->get_active() && is_running)
 	{
-		swap();
+		
 	}
 	return true;
 }
@@ -148,7 +156,7 @@ bool MainModule::normal_tick()
 {
 	if(normal_radio->get_active() && is_running)
 	{
-		swap();
+		
 	}
 	return true;
 }
@@ -157,7 +165,7 @@ bool MainModule::slow_tick()
 {
 	if(slow_radio->get_active() && is_running)
 	{
-		swap();
+		
 	}
 	return true;
 }
@@ -178,12 +186,39 @@ void MainModule::start_pause()
 
 void MainModule::hash()
 {
-	fill('c');
+	backup.erase(backup.begin(),backup.end());
+	for(int i=0; i<width; i++)
+	{
+		std::vector<std::shared_ptr<Organism> > vec;
+		for(int j=0; j<height; j++)
+		{
+			std::shared_ptr<Organism> ptr;
+			switch (generator(rng)) {
+				case 1: 
+					ptr = std::make_shared<Bacteria>();
+					break;
+				case 2: 
+					ptr = std::make_shared<Mushroom>();
+					break;
+				case 3: 
+					ptr = std::make_shared<Alga>();
+					break;
+				default: 
+					ptr = std::make_shared<Organism>();
+					break;
+			}
+			vec.push_back(ptr);
+		}
+		backup.push_back(vec);
+	}
+	
+	restart_button->clicked();
 }
 
 void MainModule::restart()
 {
-	fill('W');
+	ecosystem = backup;
+	draw();
 	is_running = false;
 	sp_button->set_label("Start");
 }

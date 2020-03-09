@@ -3,9 +3,12 @@
 using tuple_int = std::tuple<int,int>;
 
 Organism::Organism()
-: organism_type = OrganismType::None
+: organism_type(OrganismType::none), age_limit(1), food_limit(1)
 {
 }
+
+Organism::Organism(OrganismType organism_type, const int food_limit, int food_level, const int age_limit, int age)
+: organism_type(organism_type), food_limit(food_limit), food_level(food_level), age_limit(age_limit), age(age) {}
 
 Organism::~Organism()
 {

@@ -1,7 +1,7 @@
 #include "alga.h"
 
 Alga::Alga()
-: organism_type(OrganismType::Alga) food_limit(3), food_level(0), age_limit(6), age(0);
+: Organism(OrganismType::alga, 3, 0, 6, 0)
 {
 }
 
@@ -9,3 +9,6 @@ Alga::~Alga()
 {
 }
 
+void Alga::take_action(std::vector<std::vector<std::shared_ptr<Organism> > > ecosystem, tuple_int position)
+{
+}

@@ -1,1 +1,1 @@
-./Release/main.cpp.o ./Release/main_module.cpp.o
+./Release/main.cpp.o ./Release/main_module.cpp.o ./Release/organism.cpp.o ./Release/bacteria.cpp.o ./Release/mushroom.cpp.o ./Release/alga.cpp.o

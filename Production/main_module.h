@@ -1,8 +1,14 @@
 #pragma once
 
 #include <gtkmm.h>
+
 #include <sstream>
 #include <regex>
+#include <random>
+
+#include <bacteria.h>
+#include <mushroom.h>
+#include <alga.h>
 
 class MainModule
 {
@@ -29,9 +35,7 @@ protected:
 	void hash();
 	void restart();
 	
-	void fill(char c);
-	
-	void swap();
+	void draw();
 	
 	Gtk::Button *setup_button, *sp_button, *hash_button, *restart_button;
 	Gtk::Label *ecosystem_label;
@@ -40,6 +44,13 @@ protected:
 	Gtk::RadioButton * v_quick_radio, *quick_radio, *normal_radio, *slow_radio;
 	Gtk::ApplicationWindow *app_window;
 
+	const int default_width = 10, default_height = 10;
 	int width, height;
 	bool is_running;
+	
+	std::vector<std::vector<std::shared_ptr<Organism> > > ecosystem, backup;
+	
+	std::random_device dev;
+    std::mt19937 rng;
+    std::uniform_int_distribution<std::mt19937::result_type> generator;
 };

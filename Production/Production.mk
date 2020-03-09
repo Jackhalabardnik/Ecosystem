@@ -50,7 +50,7 @@ LibPath                := $(LibraryPathSwitch).
 AR       := ar rcus
 CXX      := g++
 CC       := gcc
-CXXFLAGS :=  -O2 -Wall $(shell pkg-config --cflags gtkmm-3.0) $(Preprocessors)
+CXXFLAGS :=  -O2 -std=c++14 -Wall $(shell pkg-config --cflags gtkmm-3.0) $(Preprocessors)
 CFLAGS   :=  -O2 -Wall $(Preprocessors)
 ASFLAGS  := 
 AS       := as
@@ -60,7 +60,7 @@ AS       := as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/main_module.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/main_module.cpp$(ObjectSuffix) $(IntermediateDirectory)/organism.cpp$(ObjectSuffix) $(IntermediateDirectory)/bacteria.cpp$(ObjectSuffix) $(IntermediateDirectory)/mushroom.cpp$(ObjectSuffix) $(IntermediateDirectory)/alga.cpp$(ObjectSuffix) 
 
 
 
@@ -106,6 +106,38 @@ $(IntermediateDirectory)/main_module.cpp$(DependSuffix): main_module.cpp
 
 $(IntermediateDirectory)/main_module.cpp$(PreprocessSuffix): main_module.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main_module.cpp$(PreprocessSuffix) main_module.cpp
+
+$(IntermediateDirectory)/organism.cpp$(ObjectSuffix): organism.cpp $(IntermediateDirectory)/organism.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/jacek/CLP/Ecosystem/Production/organism.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/organism.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/organism.cpp$(DependSuffix): organism.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/organism.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/organism.cpp$(DependSuffix) -MM organism.cpp
+
+$(IntermediateDirectory)/organism.cpp$(PreprocessSuffix): organism.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/organism.cpp$(PreprocessSuffix) organism.cpp
+
+$(IntermediateDirectory)/bacteria.cpp$(ObjectSuffix): bacteria.cpp $(IntermediateDirectory)/bacteria.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/jacek/CLP/Ecosystem/Production/bacteria.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/bacteria.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/bacteria.cpp$(DependSuffix): bacteria.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/bacteria.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/bacteria.cpp$(DependSuffix) -MM bacteria.cpp
+
+$(IntermediateDirectory)/bacteria.cpp$(PreprocessSuffix): bacteria.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/bacteria.cpp$(PreprocessSuffix) bacteria.cpp
+
+$(IntermediateDirectory)/mushroom.cpp$(ObjectSuffix): mushroom.cpp $(IntermediateDirectory)/mushroom.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/jacek/CLP/Ecosystem/Production/mushroom.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/mushroom.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/mushroom.cpp$(DependSuffix): mushroom.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/mushroom.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/mushroom.cpp$(DependSuffix) -MM mushroom.cpp
+
+$(IntermediateDirectory)/mushroom.cpp$(PreprocessSuffix): mushroom.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/mushroom.cpp$(PreprocessSuffix) mushroom.cpp
+
+$(IntermediateDirectory)/alga.cpp$(ObjectSuffix): alga.cpp $(IntermediateDirectory)/alga.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/jacek/CLP/Ecosystem/Production/alga.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/alga.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/alga.cpp$(DependSuffix): alga.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/alga.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/alga.cpp$(DependSuffix) -MM alga.cpp
+
+$(IntermediateDirectory)/alga.cpp$(PreprocessSuffix): alga.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/alga.cpp$(PreprocessSuffix) alga.cpp
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)

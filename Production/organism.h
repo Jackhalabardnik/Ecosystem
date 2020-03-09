@@ -8,12 +8,13 @@ using tuple_int = std::tuple<int,int>;
 
 enum OrganismType
 {
-	None, Bacteria, Mushroom, Alga
+	none, bacteria, mushroom, alga
 };
 
 class Organism
 {
 public:
+	Organism(OrganismType organism_type, const int food_limit, int food_level, const int age_limit, int age);
 	Organism();
 	virtual ~Organism();
 
