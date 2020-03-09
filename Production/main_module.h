@@ -37,6 +37,8 @@ protected:
 	void hash();
 	void restart();
 	
+	void copy_ecosystems();
+	
 	void update_screen();
 	
 	Gtk::Button *setup_button, *sp_button, *hash_button, *restart_button;

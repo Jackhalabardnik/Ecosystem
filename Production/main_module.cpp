@@ -107,6 +107,36 @@ std::string MainModule::int_to_string(int i)
 	return s;
 }
 
+void MainModule::copy_ecosystems()
+{
+	ecosystem.erase(ecosystem.begin(),ecosystem.end());
+	
+	for(auto v : backup)
+	{
+		std::vector<std::shared_ptr<Organism> > vec; 
+		for( auto x : v)
+		{
+			std::shared_ptr<Organism> ptr;
+			switch (x->get_type()) {
+				case 0:
+					ptr = std::make_shared<Organism>();
+					break;
+				case 1:
+					ptr = std::make_shared<Bacteria>();
+					break;
+				case 2:
+					ptr = std::make_shared<Mushroom>();
+					break;
+				default:
+					ptr = std::make_shared<Alga>();
+					break;
+			}
+			vec.push_back(ptr);
+		}
+		ecosystem.push_back(vec);
+	}
+}
+
 void MainModule::update_screen()
 {
 	std::string represenation;	
