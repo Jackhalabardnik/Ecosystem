@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Jacek Wójcik
-Date                   :=03/03/20
+Date                   :=09/03/20
 CodeLitePath           :=/home/jacek/.codelite
 LinkerName             :=g++
 SharedObjectLinkerName :=g++ -shared -fPIC
@@ -36,7 +36,7 @@ ObjectsFileList        :="Tests.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
 LinkOptions            :=  $(shell pkg-config --libs gtkmm-3.0)
-IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). 
+IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). $(IncludeSwitch)./../Production 
 IncludePCH             := 
 RcIncludePath          := 
 Libs                   := 
@@ -60,7 +60,7 @@ AS       := as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/mainwindow.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/organism_test.cpp$(ObjectSuffix) $(IntermediateDirectory)/catch_main.cpp$(ObjectSuffix) 
 
 
 
@@ -91,21 +91,21 @@ PreBuild:
 ##
 ## Objects
 ##
-$(IntermediateDirectory)/mainwindow.cpp$(ObjectSuffix): mainwindow.cpp $(IntermediateDirectory)/mainwindow.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/jacek/CLP/Ecosystem/Tests/mainwindow.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/mainwindow.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/mainwindow.cpp$(DependSuffix): mainwindow.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/mainwindow.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/mainwindow.cpp$(DependSuffix) -MM mainwindow.cpp
+$(IntermediateDirectory)/organism_test.cpp$(ObjectSuffix): organism_test.cpp $(IntermediateDirectory)/organism_test.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/jacek/CLP/Ecosystem/Tests/organism_test.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/organism_test.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/organism_test.cpp$(DependSuffix): organism_test.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/organism_test.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/organism_test.cpp$(DependSuffix) -MM organism_test.cpp
 
-$(IntermediateDirectory)/mainwindow.cpp$(PreprocessSuffix): mainwindow.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/mainwindow.cpp$(PreprocessSuffix) mainwindow.cpp
+$(IntermediateDirectory)/organism_test.cpp$(PreprocessSuffix): organism_test.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/organism_test.cpp$(PreprocessSuffix) organism_test.cpp
 
-$(IntermediateDirectory)/main.cpp$(ObjectSuffix): main.cpp $(IntermediateDirectory)/main.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/jacek/CLP/Ecosystem/Tests/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/main.cpp$(DependSuffix): main.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/main.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/main.cpp$(DependSuffix) -MM main.cpp
+$(IntermediateDirectory)/catch_main.cpp$(ObjectSuffix): catch_main.cpp $(IntermediateDirectory)/catch_main.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/jacek/CLP/Ecosystem/Tests/catch_main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/catch_main.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/catch_main.cpp$(DependSuffix): catch_main.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/catch_main.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/catch_main.cpp$(DependSuffix) -MM catch_main.cpp
 
-$(IntermediateDirectory)/main.cpp$(PreprocessSuffix): main.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main.cpp$(PreprocessSuffix) main.cpp
+$(IntermediateDirectory)/catch_main.cpp$(PreprocessSuffix): catch_main.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/catch_main.cpp$(PreprocessSuffix) catch_main.cpp
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)

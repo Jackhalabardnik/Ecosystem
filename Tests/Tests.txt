@@ -1,1 +1,1 @@
-./Release/mainwindow.cpp.o ./Release/main.cpp.o
+./Release/organism_test.cpp.o ./Release/catch_main.cpp.o

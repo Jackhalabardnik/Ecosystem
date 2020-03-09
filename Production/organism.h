@@ -1,0 +1,34 @@
+#pragma once
+
+#include <vector>
+#include <tuple>
+#include <memory>
+
+using tuple_int = std::tuple<int,int>;
+
+enum OrganismType
+{
+	None, Bacteria, Mushroom, Alga
+};
+
+class Organism
+{
+public:
+	Organism();
+	virtual ~Organism();
+
+	bool is_alive();
+	bool is_hungry();
+	
+	OrganismType get_type();
+	
+	virtual void take_action(std::vector<std::vector<std::shared_ptr<Organism> > > ecosystem, tuple_int position) = 0;
+
+protected:	
+	std::vector<tuple_int > search_for_neighbourhood(tuple_int position, tuple_int ecosystem_size);
+
+private:
+	int food_level, food_limit, age, age_limit;
+	OrganismType organism_type;
+};
+

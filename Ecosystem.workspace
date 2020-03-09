@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="Ecosystem" Database="" Version="10.0.0">
-  <Project Name="Production" Path="Production/Production.project" Active="Yes"/>
-  <Project Name="Tests" Path="Tests/Tests.project" Active="No"/>
+  <Project Name="Production" Path="Production/Production.project" Active="No"/>
+  <Project Name="Tests" Path="Tests/Tests.project" Active="Yes"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Environment/>

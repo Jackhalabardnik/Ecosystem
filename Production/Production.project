@@ -9,10 +9,12 @@
   <Dependencies/>
   <VirtualDirectory Name="include">
     <File Name="main_module.h"/>
+    <File Name="organism.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
     <File Name="main_module.cpp"/>
+    <File Name="organism.cpp"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
