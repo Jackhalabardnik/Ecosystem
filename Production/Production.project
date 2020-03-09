@@ -10,11 +10,17 @@
   <VirtualDirectory Name="include">
     <File Name="main_module.h"/>
     <File Name="organism.h"/>
+    <File Name="bacteria.h"/>
+    <File Name="mushroom.h"/>
+    <File Name="alga.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
     <File Name="main_module.cpp"/>
     <File Name="organism.cpp"/>
+    <File Name="bacteria.cpp"/>
+    <File Name="mushroom.cpp"/>
+    <File Name="alga.cpp"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

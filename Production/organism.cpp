@@ -3,11 +3,17 @@
 using tuple_int = std::tuple<int,int>;
 
 Organism::Organism()
+: organism_type = OrganismType::None
 {
 }
 
 Organism::~Organism()
 {
+}
+
+void Organism::take_action(std::vector<std::vector<std::shared_ptr<Organism> > > ecosystem, tuple_int position)
+{
+	
 }
 
 OrganismType Organism::get_type()
