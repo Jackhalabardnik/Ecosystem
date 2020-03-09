@@ -51,7 +51,7 @@ TEST_CASE("Organism propely finds his neighbourhood", "[OrganismTests]")
 		CHECK(matchV(org.search_for_neighbourhood(position, size), vec));
 	} 
 	
-	SECTION("RIGHT_UP")
+	SECTION("LEFT_DOWN")
 	{
 		tuple_int position(3,0), size(4,4);
 		std::vector<tuple_int > vec;
@@ -61,7 +61,7 @@ TEST_CASE("Organism propely finds his neighbourhood", "[OrganismTests]")
 		CHECK(matchV(org.search_for_neighbourhood(position, size), vec));
 	} 
 	
-	SECTION("LEFT_DOWN")
+	SECTION("RIGHT_UP")
 	{
 		tuple_int position(0,3), size(4,4);
 		std::vector<tuple_int > vec;
@@ -81,7 +81,7 @@ TEST_CASE("Organism propely finds his neighbourhood", "[OrganismTests]")
 		CHECK(matchV(org.search_for_neighbourhood(position, size), vec));
 	} 
 	
-	SECTION("DOWN")
+	SECTION("RIGHT")
 	{
 		tuple_int position(2,3), size(4,4);
 		std::vector<tuple_int > vec;
@@ -93,7 +93,7 @@ TEST_CASE("Organism propely finds his neighbourhood", "[OrganismTests]")
 		CHECK(matchV(org.search_for_neighbourhood(position, size), vec));
 	} 
 	
-	SECTION("UP")
+	SECTION("LEFT")
 	{
 		tuple_int position(2,0), size(4,4);
 		std::vector<tuple_int > vec;
@@ -105,7 +105,7 @@ TEST_CASE("Organism propely finds his neighbourhood", "[OrganismTests]")
 		CHECK(matchV(org.search_for_neighbourhood(position, size), vec));
 	} 
 	
-	SECTION("RIGHT")
+	SECTION("DOWN")
 	{
 		tuple_int position(3,1), size(4,4);
 		std::vector<tuple_int > vec;
@@ -117,7 +117,7 @@ TEST_CASE("Organism propely finds his neighbourhood", "[OrganismTests]")
 		CHECK(matchV(org.search_for_neighbourhood(position, size), vec));
 	} 
 	
-	SECTION("LEFT")
+	SECTION("UP")
 	{
 		tuple_int position(0,1), size(4,4);
 		std::vector<tuple_int > vec;
@@ -141,6 +141,23 @@ TEST_CASE("Organism propely finds his neighbourhood", "[OrganismTests]")
 		vec.push_back(tuple_int(2,0));
 		vec.push_back(tuple_int(1,2));
 		vec.push_back(tuple_int(1,0));
+		CHECK(matchV(org.search_for_neighbourhood(position, size), vec));
+	}
+	
+	SECTION("LINE")
+	{
+		tuple_int position(0,1), size(1,3);
+		std::vector<tuple_int > vec;
+		vec.push_back(tuple_int(0,2));
+		vec.push_back(tuple_int(0,0));
+		CHECK(matchV(org.search_for_neighbourhood(position, size), vec));
+	}
+	
+	SECTION("LINE_L_END")
+	{
+		tuple_int position(0,0), size(1,3);
+		std::vector<tuple_int > vec;
+		vec.push_back(tuple_int(0,1));
 		CHECK(matchV(org.search_for_neighbourhood(position, size), vec));
 	}
 }

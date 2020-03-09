@@ -36,6 +36,12 @@ void MainModule::get_gui_from_glade()
 	builder->get_widget("get_grid_size_dialog", setup_dialog);
 	builder->get_widget("width_entry", width_entry);
 	builder->get_widget("height_entry", height_entry);
+	builder->get_widget("dead_cells", dead_label);
+	builder->get_widget("mushrooms", mushroom_label);
+	builder->get_widget("bacterias", bacteria_label);
+	builder->get_widget("algas", alga_label);
+	builder->get_widget("step", step_label);
+	builder->get_widget("free_cells", free_label);
 }
 
 void MainModule::connect_signals()
@@ -74,8 +80,6 @@ void MainModule::make_grid()
 			error_dialog->hide();
 		}
 	}
-	
-	
 }
 
 bool MainModule::is_number(std::string s)
@@ -94,47 +98,68 @@ int MainModule::string_to_int(std::string s)
 	return i;
 }
 
-void MainModule::draw()
+std::string MainModule::int_to_string(int i)
+{
+	std::stringstream ss;
+	ss << i;
+	std::string s;
+	ss >> s;
+	return s;
+}
+
+void MainModule::update_screen()
 {
 	std::string represenation;	
 	
-	for(int i= 0; i< height; i++)
+	int algas = 0, bacterias = 0, mushrooms = 0, free = 0, dead = 0;
+	
+	for(unsigned int i = 0; i< height; i++)
 	{
-		for (int j = 0; j< width; j++)
+		for (unsigned int j = 0; j< width; j++)
 		{
 			if(ecosystem[i][j]->is_alive() == false)
 			{
 				represenation += "+";
+				dead++;
 				continue;
 			}
 			
 			switch (ecosystem[i][j]->get_type()) {
 				case 0:
 					represenation += "-";
+					free++;
 					break;
 				case 1:
 					represenation += "@";
+					bacterias++;
 					break;
 				case 2:
 					represenation += "#";
+					mushrooms++;
 					break;
 				case 3:
 					represenation += "*";
+					algas++;
 					break;
 			}
 		}
 		represenation += "\n";
 	}
 	
+	free_label->set_text(int_to_string(free));
+	mushroom_label->set_text(int_to_string(mushrooms));
+	bacteria_label->set_text(int_to_string(bacterias));
+	alga_label->set_text(int_to_string(algas));
+	dead_label->set_text(int_to_string(dead));
+	step_label->set_text(int_to_string(step_counter));
 	ecosystem_label->set_text(represenation);
-
 }
 
 bool MainModule::v_quick_tick()
 {
 	if(v_quick_radio->get_active() && is_running)
 	{
-		
+		work();
 	}
 	return true;
 }
@@ -145,7 +170,7 @@ bool MainModule::quick_tick()
 {
 	if(quick_radio->get_active() && is_running)
 	{
-		
+		work();
 	}
 	return true;
 }
@@ -156,7 +181,7 @@ bool MainModule::normal_tick()
 {
 	if(normal_radio->get_active() && is_running)
 	{
-		
+		work();
 	}
 	return true;
 }
@@ -165,7 +190,7 @@ bool MainModule::slow_tick()
 {
 	if(slow_radio->get_active() && is_running)
 	{
-		
+		work();
 	}
 	return true;
 }
@@ -187,10 +212,10 @@ void MainModule::start_pause()
 void MainModule::hash()
 {
 	backup.erase(backup.begin(),backup.end());
-	for(int i=0; i<width; i++)
+	for(int i=0; i< height; i++)
 	{
 		std::vector<std::shared_ptr<Organism> > vec;
-		for(int j=0; j<height; j++)
+		for(int j=0; j< width; j++)
 		{
 			std::shared_ptr<Organism> ptr;
 			switch (generator(rng)) {
@@ -218,7 +243,23 @@ void MainModule::hash()
 void MainModule::restart()
 {
 	ecosystem = backup;
-	draw();
+	step_counter = 0;
 	is_running = false;
 	sp_button->set_label("Start");
+	update_screen();
+}
+
+void MainModule::work()
+{
+	for(int i = 0; i< ecosystem.size(); i++)
+	{
+		for(int j=0; j< ecosystem[i].size(); j++)
+		{
+			ecosystem[i][j]->take_action(ecosystem, std::tuple<int,int>(i,j));
+		}
+	}
+	
+	step_counter++;
+	
+	update_screen();
 }

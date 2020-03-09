@@ -203,7 +203,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Free cells</property>
+                            <property name="label" translatable="yes">Free cells [-]</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -214,7 +214,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Mushrooms</property>
+                            <property name="label" translatable="yes">Mushrooms [#]</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -225,7 +225,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Bacterias</property>
+                            <property name="label" translatable="yes">Bacterias [@]</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -236,7 +236,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Dead Organisms</property>
+                            <property name="label" translatable="yes">Dead Organisms [+]</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -302,7 +302,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Algas</property>
+                            <property name="label" translatable="yes">Algas [*]</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -359,6 +359,9 @@
           <object class="GtkLabel" id="ecosystem_label">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <attributes>
+              <attribute name="font-desc" value="FreeMono 12"/>
+            </attributes>
           </object>
           <packing>
             <property name="expand">False</property>

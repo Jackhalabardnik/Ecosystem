@@ -4,7 +4,6 @@
 
 #include <sstream>
 #include <regex>
-#include <random>
 
 #include <bacteria.h>
 #include <mushroom.h>
@@ -25,6 +24,9 @@ protected:
 	void make_grid();
 	bool is_number(std::string s);
 	int string_to_int(std::string s);
+	std::string int_to_string(int i);
+	
+	void work();
 	
 	bool v_quick_tick();
 	bool quick_tick();
@@ -35,17 +37,17 @@ protected:
 	void hash();
 	void restart();
 	
-	void draw();
+	void update_screen();
 	
 	Gtk::Button *setup_button, *sp_button, *hash_button, *restart_button;
-	Gtk::Label *ecosystem_label;
+	Gtk::Label *ecosystem_label, *dead_label, *mushroom_label, *bacteria_label, *alga_label, *step_label, *free_label;
 	Gtk::MessageDialog * error_dialog, *setup_dialog;
 	Gtk::Entry * width_entry, *height_entry;
 	Gtk::RadioButton * v_quick_radio, *quick_radio, *normal_radio, *slow_radio;
 	Gtk::ApplicationWindow *app_window;
 
 	const int default_width = 10, default_height = 10;
-	int width, height;
+	int width, height, step_counter;
 	bool is_running;
 	
 	std::vector<std::vector<std::shared_ptr<Organism> > > ecosystem, backup;

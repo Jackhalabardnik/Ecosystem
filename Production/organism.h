@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+#include <algorithm>
+#include <random>
 #include <tuple>
 #include <memory>
 
@@ -14,7 +16,7 @@ enum OrganismType
 class Organism
 {
 public:
-	Organism(OrganismType organism_type, const int food_limit, int food_level, const int age_limit, int age);
+	Organism(OrganismType organism_type, const int food_limit, const int age_limit, const int duplicate_cost_);
 	Organism();
 	virtual ~Organism();
 
@@ -23,13 +25,19 @@ public:
 	
 	OrganismType get_type();
 	
-	virtual void take_action(std::vector<std::vector<std::shared_ptr<Organism> > > ecosystem, tuple_int position);
+	virtual void take_action(std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem, tuple_int position);
 
 protected:	
 	std::vector<tuple_int > search_for_neighbourhood(tuple_int position, tuple_int ecosystem_size);
 	
-	int food_level, age;
-	const int food_limit, age_limit;
+	void setup_random_generator();
+	void bound_random_generator(int n);
+	
 	OrganismType organism_type;
+	int food_level, age, food_limit, age_limit, duplicate_cost;
+	
+	std::random_device dev;
+    std::mt19937 rng;
+    std::uniform_int_distribution<std::mt19937::result_type> generator;
 };
 
