@@ -19,6 +19,8 @@ public:
 	Organism(OrganismType organism_type, const int food_limit, const int age_limit, const int duplicate_cost_);
 	Organism();
 	virtual ~Organism();
+	
+	Organism& operator=(const Organism& o);
 
 	bool is_alive();
 	bool is_hungry();

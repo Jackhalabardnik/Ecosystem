@@ -20,23 +20,57 @@ void Mushroom::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 			
 		if(is_hungry())
 		{
-			neigh.erase(std::remove_if(neigh.begin(), neigh.end(),
-								[ecosystem](std::tuple<int,int> t)
-								{
-									return ecosystem[std::get<0>(t)][std::get<1>(t)]->is_alive() == true;
-								}),
-								neigh.end());
-			if(neigh.size() > 0)
+			bool has_eat = false;
+			for(int i=0;i<neigh.size();i++)
 			{
-				int n = 0;
-				if(neigh.size() > 1)
+				if(ecosystem[std::get<0>(neigh[i])][std::get<1>(neigh[i])]->is_alive() == false)
 				{
-					bound_random_generator(neigh.size());
-					n = generator(rng);
+					has_eat = true;
 				}
-				
-				ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = std::make_shared<Organism>();
-				food_level++;
+			}
+			
+			if(has_eat)
+			{
+				neigh.erase(std::remove_if(neigh.begin(), neigh.end(),
+									[ecosystem](std::tuple<int,int> t)
+									{
+										return ecosystem[std::get<0>(t)][std::get<1>(t)]->is_alive() == true;
+									}),
+									neigh.end());
+				if(neigh.size() > 0)
+				{
+					int n = 0;
+					if(neigh.size() > 1)
+					{
+						bound_random_generator(neigh.size());
+						n = generator(rng);
+					}
+					
+					ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = std::make_shared<Organism>();
+					food_level++;
+				}
+			}
+			else
+			{
+				neigh.erase(std::remove_if(neigh.begin(), neigh.end(),
+									[ecosystem](std::tuple<int,int> t)
+									{
+										return ecosystem[std::get<0>(t)][std::get<1>(t)]->get_type() != OrganismType::none;
+									}),
+									neigh.end());
+				if(neigh.size() > 0)
+				{
+					int n = 0;
+					if(neigh.size() > 1)
+					{
+						bound_random_generator(neigh.size());
+						n = generator(rng);
+					}
+					
+					
+					*ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = *ecosystem[std::get<0>(position)][std::get<1>(position)];
+					ecosystem[std::get<0>(position)][std::get<1>(position)] = std::make_shared<Organism>();
+				}
 			}
 		}
 		else

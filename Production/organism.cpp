@@ -15,6 +15,19 @@ Organism::Organism(OrganismType organism_type, const int food_limit_, const int 
 
 Organism::~Organism() {}
 
+
+Organism& Organism::operator=(const Organism& o)
+{
+	organism_type = o.organism_type;
+	food_level = o.food_level;
+	food_limit = o.food_limit;
+	age_limit = o.age_limit;
+	age = o.age;
+	duplicate_cost = o.duplicate_cost;
+	
+	return *this;
+}
+
 void Organism::setup_random_generator()
 {
 	rng = std::mt19937(dev());
@@ -89,4 +102,5 @@ std::vector<tuple_int > Organism::search_for_neighbourhood(tuple_int position, t
 	
 	return vec;
 }
+
 
