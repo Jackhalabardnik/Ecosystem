@@ -25,6 +25,9 @@ public:
 	bool is_alive();
 	bool is_hungry();
 	
+	void untouch();
+	bool was_touched();
+	
 	OrganismType get_type();
 	
 	virtual void take_action(std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem, tuple_int position);
@@ -37,6 +40,7 @@ protected:
 	
 	OrganismType organism_type;
 	int food_level, age, food_limit, age_limit, duplicate_cost;
+	bool touched;
 	
 	std::random_device dev;
     std::mt19937 rng;

@@ -12,6 +12,8 @@ Mushroom::~Mushroom()
 
 void Mushroom::take_action(std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem, tuple_int position)
 {
+	touched = true;
+	
 	if(is_alive())
 	{
 		age++;
@@ -20,16 +22,16 @@ void Mushroom::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 			
 		if(is_hungry())
 		{
-			bool has_eat = false;
-			for(int i=0;i<neigh.size();i++)
+			bool has_food = false;
+			for(unsigned int i=0;i<neigh.size();i++)
 			{
 				if(ecosystem[std::get<0>(neigh[i])][std::get<1>(neigh[i])]->is_alive() == false)
 				{
-					has_eat = true;
+					has_food = true;
 				}
 			}
 			
-			if(has_eat)
+			if(has_food)
 			{
 				neigh.erase(std::remove_if(neigh.begin(), neigh.end(),
 									[ecosystem](std::tuple<int,int> t)
@@ -67,7 +69,7 @@ void Mushroom::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 						n = generator(rng);
 					}
 					
-					
+					ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = std::make_shared<Mushroom>();
 					*ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = *ecosystem[std::get<0>(position)][std::get<1>(position)];
 					ecosystem[std::get<0>(position)][std::get<1>(position)] = std::make_shared<Organism>();
 				}

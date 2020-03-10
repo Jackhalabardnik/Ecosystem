@@ -24,6 +24,7 @@ Organism& Organism::operator=(const Organism& o)
 	age_limit = o.age_limit;
 	age = o.age;
 	duplicate_cost = o.duplicate_cost;
+	touched = o.touched;
 	
 	return *this;
 }
@@ -103,4 +104,11 @@ std::vector<tuple_int > Organism::search_for_neighbourhood(tuple_int position, t
 	return vec;
 }
 
-
+void Organism::untouch()
+{
+	touched = false;
+}
+bool Organism::was_touched()
+{
+	return touched;
+}

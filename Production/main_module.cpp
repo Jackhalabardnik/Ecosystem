@@ -143,9 +143,9 @@ void MainModule::update_screen()
 	
 	int algas = 0, bacterias = 0, mushrooms = 0, free = 0, dead = 0;
 	
-	for(unsigned int i = 0; i< height; i++)
+	for(int i = 0; i< ecosystem.size(); i++)
 	{
-		for (unsigned int j = 0; j< width; j++)
+		for (int j = 0; j< ecosystem[i].size(); j++)
 		{
 			if(ecosystem[i][j]->is_alive() == false)
 			{
@@ -281,11 +281,22 @@ void MainModule::restart()
 
 void MainModule::work()
 {
-	for(int i = 0; i< ecosystem.size(); i++)
+	for(auto v: ecosystem)
 	{
-		for(int j=0; j< ecosystem[i].size(); j++)
+		for(auto x : v)
 		{
-			ecosystem[i][j]->take_action(ecosystem, std::tuple<int,int>(i,j));
+			x->untouch();
+		}
+	}
+	
+	for(unsigned int i = 0; i< ecosystem.size(); i++)
+	{
+		for(unsigned int j=0; j< ecosystem[i].size(); j++)
+		{
+			if(ecosystem[i][j]->was_touched() == false)
+			{
+				ecosystem[i][j]->take_action(ecosystem, std::tuple<int,int>(i,j));
+			}
 		}
 	}
 	
