@@ -1,6 +1,9 @@
 #include "organism.h"
 
 using tuple_int = std::tuple<int,int>;
+using vector_t = std::vector<tuple_int >;
+using vector_2D_shared_ptr_organism = std::vector<std::vector<std::shared_ptr<Organism> > >;
+using std::get;
 
 Organism::Organism()
 : organism_type(OrganismType::none), food_level(0), age(0), food_limit(1), age_limit(1), duplicate_cost(1) {}
@@ -40,7 +43,7 @@ void Organism::bound_random_generator(int n)
 	generator = std::uniform_int_distribution<std::mt19937::result_type>(0,n);
 }
 
-void Organism::take_action(std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem, tuple_int position) {}
+void Organism::take_action(vector_2D_shared_ptr_organism &ecosystem, tuple_int position) {}
 
 OrganismType Organism::get_type()
 {
@@ -57,48 +60,48 @@ bool Organism::is_hungry()
 	return food_level < food_limit;
 }
 
-std::vector<tuple_int > Organism::search_for_neighbourhood(tuple_int position, tuple_int ecosystem_size)
+vector_t Organism::search_for_neighbourhood(tuple_int position, tuple_int ecosystem_size)
 {
-	std::vector<tuple_int > vec;
+	vector_t vec;
 	
-	if(std::get<0>(position) != 0)
+	if(get<0>(position) != 0)
 	{
-		vec.push_back(tuple_int(std::get<0>(position) -1 , std::get<1>(position)));
+		vec.push_back(tuple_int(get<0>(position) -1 , get<1>(position)));
 		
-		if(std::get<1>(position) != std::get<1>(ecosystem_size) -1)
+		if(get<1>(position) != get<1>(ecosystem_size) -1)
 		{
-			vec.push_back(tuple_int(std::get<0>(position) - 1 , std::get<1>(position)+1));
+			vec.push_back(tuple_int(get<0>(position) - 1 , get<1>(position)+1));
 		}
 		
-		if(std::get<1>(position) != 0)
+		if(get<1>(position) != 0)
 		{
-			vec.push_back(tuple_int(std::get<0>(position)-1, std::get<1>(position)-1));
-		}
-	}
-	
-	if(std::get<0>(position) != std::get<0>(ecosystem_size) -1)
-	{
-		vec.push_back(tuple_int(std::get<0>(position) + 1 , std::get<1>(position)));
-		
-		if(std::get<1>(position) != std::get<1>(ecosystem_size) -1)
-		{
-			vec.push_back(tuple_int(std::get<0>(position) + 1 , std::get<1>(position)+1));
-		}
-		
-		if(std::get<1>(position) != 0)
-		{
-			vec.push_back(tuple_int(std::get<0>(position)+1, std::get<1>(position)-1));
+			vec.push_back(tuple_int(get<0>(position)-1, get<1>(position)-1));
 		}
 	}
 	
-	if(std::get<1>(position) != std::get<1>(ecosystem_size) -1)
+	if(get<0>(position) != get<0>(ecosystem_size) -1)
 	{
-		vec.push_back(tuple_int(std::get<0>(position), std::get<1>(position)+1));
+		vec.push_back(tuple_int(get<0>(position) + 1 , get<1>(position)));
+		
+		if(get<1>(position) != get<1>(ecosystem_size) -1)
+		{
+			vec.push_back(tuple_int(get<0>(position) + 1 , get<1>(position)+1));
+		}
+		
+		if(get<1>(position) != 0)
+		{
+			vec.push_back(tuple_int(get<0>(position)+1, get<1>(position)-1));
+		}
 	}
 	
-	if(std::get<1>(position) != 0)
+	if(get<1>(position) != get<1>(ecosystem_size) -1)
 	{
-		vec.push_back(tuple_int(std::get<0>(position), std::get<1>(position)-1));
+		vec.push_back(tuple_int(get<0>(position), get<1>(position)+1));
+	}
+	
+	if(get<1>(position) != 0)
+	{
+		vec.push_back(tuple_int(get<0>(position), get<1>(position)-1));
 	}
 	
 	return vec;
@@ -113,31 +116,31 @@ bool Organism::was_touched()
 	return touched;
 }
 
-void Organism::filter_neighbourhood_alive(std::vector<tuple_int>& neighbourhood, const std::vector<std::vector<std::shared_ptr<Organism> > >& ecosystem, bool wanted_alive)
+void Organism::filter_neighbourhood_alive(vector_t& neighbourhood, const vector_2D_shared_ptr_organism& ecosystem, bool wanted_alive)
 {
 	neighbourhood.erase(std::remove_if(neighbourhood.begin(), neighbourhood.end(),
 									[ecosystem, wanted_alive](std::tuple<int,int> t)
 									{
-										return ecosystem[std::get<0>(t)][std::get<1>(t)]->is_alive() != wanted_alive;
+										return ecosystem[get<0>(t)][get<1>(t)]->is_alive() != wanted_alive;
 									}),
 									neighbourhood.end());
 }
 
-void Organism::filter_neighbourhood_type(std::vector<tuple_int>& neighbourhood, const std::vector<std::vector<std::shared_ptr<Organism> > >& ecosystem, OrganismType wanted_type)
+void Organism::filter_neighbourhood_type(vector_t& neighbourhood, const vector_2D_shared_ptr_organism& ecosystem, OrganismType wanted_type)
 {
 	neighbourhood.erase(std::remove_if(neighbourhood.begin(), neighbourhood.end(),
 									[ecosystem, wanted_type](std::tuple<int,int> t)
 									{
-										return ecosystem[std::get<0>(t)][std::get<1>(t)]->get_type() != wanted_type;
+										return ecosystem[get<0>(t)][get<1>(t)]->get_type() != wanted_type;
 									}),
 									neighbourhood.end());
 }
 
-bool Organism::neighbourdhood_has_type(const std::vector<tuple_int>& neighbourhood, const std::vector<std::vector<std::shared_ptr<Organism> > >& ecosystem, OrganismType wanted_type)
+bool Organism::neighbourdhood_has_type(const vector_t& neighbourhood, const vector_2D_shared_ptr_organism& ecosystem, OrganismType wanted_type)
 {
 	for(unsigned int i=0;i<neighbourhood.size();i++)
 	{
-		if(ecosystem[std::get<0>(neighbourhood[i])][std::get<1>(neighbourhood[i])]->get_type() == wanted_type)
+		if(ecosystem[get<0>(neighbourhood[i])][get<1>(neighbourhood[i])]->get_type() == wanted_type)
 		{
 			return true;
 		}
@@ -145,11 +148,11 @@ bool Organism::neighbourdhood_has_type(const std::vector<tuple_int>& neighbourho
 	return false;
 }
 
-bool Organism::is_whole_neighbourd_alive(const std::vector<tuple_int>& neighbourhood, const std::vector<std::vector<std::shared_ptr<Organism> > >& ecosystem)
+bool Organism::is_whole_neighbourd_alive(const vector_t& neighbourhood, const vector_2D_shared_ptr_organism& ecosystem)
 {
 	for(unsigned int i=0;i<neighbourhood.size();i++)
 	{
-		if(ecosystem[std::get<0>(neighbourhood[i])][std::get<1>(neighbourhood[i])]->is_alive() == false)
+		if(ecosystem[get<0>(neighbourhood[i])][get<1>(neighbourhood[i])]->is_alive() == false)
 		{
 			return false;
 		}
@@ -157,7 +160,7 @@ bool Organism::is_whole_neighbourd_alive(const std::vector<tuple_int>& neighbour
 	return true;
 }
 
-void Organism::try_to_eat_other_organism(const std::vector<tuple_int>& neighbourhood, std::vector<std::vector<std::shared_ptr<Organism> > >& ecosystem)
+void Organism::try_to_eat_other_organism(const vector_t& neighbourhood, vector_2D_shared_ptr_organism& ecosystem)
 {
 	if(neighbourhood.size() > 0)
 	{
@@ -168,12 +171,12 @@ void Organism::try_to_eat_other_organism(const std::vector<tuple_int>& neighbour
 			n = generator(rng);
 		}
 		
-		ecosystem[std::get<0>(neighbourhood[n])][std::get<1>(neighbourhood[n])] = std::make_shared<Organism>();
+		ecosystem[get<0>(neighbourhood[n])][get<1>(neighbourhood[n])] = std::make_shared<Organism>();
 		food_level++;
 	}
 }
 
-void Organism::try_to_duplicate(std::vector<tuple_int>& neighbourhood, std::vector<std::vector<std::shared_ptr<Organism> > >& ecosystem, std::shared_ptr<Organism> new_child)
+void Organism::try_to_duplicate(vector_t& neighbourhood, vector_2D_shared_ptr_organism& ecosystem, std::shared_ptr<Organism> new_child)
 {
 	filter_neighbourhood_type(neighbourhood, ecosystem, OrganismType::none);
 			
@@ -186,12 +189,12 @@ void Organism::try_to_duplicate(std::vector<tuple_int>& neighbourhood, std::vect
 			n = generator(rng);
 		}
 		
-		ecosystem[std::get<0>(neighbourhood[n])][std::get<1>(neighbourhood[n])] = new_child;
+		ecosystem[get<0>(neighbourhood[n])][get<1>(neighbourhood[n])] = new_child;
 		food_level -= duplicate_cost;
 	}
 }
 
-void Organism::try_to_move(std::vector<tuple_int>& neighbourhood, std::vector<std::vector<std::shared_ptr<Organism> > >& ecosystem, tuple_int old_position, std::shared_ptr<Organism> guest)
+void Organism::try_to_move(vector_t& neighbourhood, vector_2D_shared_ptr_organism& ecosystem, tuple_int old_position, std::shared_ptr<Organism> guest)
 {
 	filter_neighbourhood_type(neighbourhood, ecosystem, OrganismType::none);
 	
@@ -204,8 +207,8 @@ void Organism::try_to_move(std::vector<tuple_int>& neighbourhood, std::vector<st
 			n = generator(rng);
 		}
 		
-		ecosystem[std::get<0>(neighbourhood[n])][std::get<1>(neighbourhood[n])] = guest;
-		*ecosystem[std::get<0>(neighbourhood[n])][std::get<1>(neighbourhood[n])] = *ecosystem[std::get<0>(old_position)][std::get<1>(old_position)];
-		ecosystem[std::get<0>(old_position)][std::get<1>(old_position)] = std::make_shared<Organism>();
+		ecosystem[get<0>(neighbourhood[n])][get<1>(neighbourhood[n])] = guest;
+		*ecosystem[get<0>(neighbourhood[n])][get<1>(neighbourhood[n])] = *ecosystem[get<0>(old_position)][get<1>(old_position)];
+		ecosystem[get<0>(old_position)][get<1>(old_position)] = std::make_shared<Organism>();
 	}
 }
