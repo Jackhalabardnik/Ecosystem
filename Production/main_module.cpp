@@ -143,9 +143,9 @@ void MainModule::update_screen()
 	
 	int algas = 0, bacterias = 0, mushrooms = 0, free = 0, dead = 0;
 	
-	for(int i = 0; i< ecosystem.size(); i++)
+	for(unsigned int i = 0; i< ecosystem.size(); i++)
 	{
-		for (int j = 0; j< ecosystem[i].size(); j++)
+		for (unsigned int j = 0; j< ecosystem[i].size(); j++)
 		{
 			if(ecosystem[i][j]->is_alive() == false)
 			{

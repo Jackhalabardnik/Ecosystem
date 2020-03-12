@@ -33,12 +33,8 @@ void Mushroom::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 			
 			if(has_food)
 			{
-				neigh.erase(std::remove_if(neigh.begin(), neigh.end(),
-									[ecosystem](std::tuple<int,int> t)
-									{
-										return ecosystem[std::get<0>(t)][std::get<1>(t)]->is_alive() == true;
-									}),
-									neigh.end());
+				filter_neighbourhood_alive(neigh, ecosystem, false);
+									
 				if(neigh.size() > 0)
 				{
 					int n = 0;
@@ -54,12 +50,8 @@ void Mushroom::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 			}
 			else
 			{
-				neigh.erase(std::remove_if(neigh.begin(), neigh.end(),
-									[ecosystem](std::tuple<int,int> t)
-									{
-										return ecosystem[std::get<0>(t)][std::get<1>(t)]->get_type() != OrganismType::none;
-									}),
-									neigh.end());
+				filter_neighbourhood_type(neigh, ecosystem, OrganismType::none);
+				
 				if(neigh.size() > 0)
 				{
 					int n = 0;
@@ -69,20 +61,16 @@ void Mushroom::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 						n = generator(rng);
 					}
 					
-					ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = std::make_shared<Mushroom>();
-					*ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = *ecosystem[std::get<0>(position)][std::get<1>(position)];
-					ecosystem[std::get<0>(position)][std::get<1>(position)] = std::make_shared<Organism>();
+					//ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = std::make_shared<Mushroom>();
+					//*ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = *ecosystem[std::get<0>(position)][std::get<1>(position)];
+					//ecosystem[std::get<0>(position)][std::get<1>(position)] = std::make_shared<Organism>();
 				}
 			}
 		}
 		else
 		{
-			neigh.erase(std::remove_if(neigh.begin(), neigh.end(),
-								[ecosystem](std::tuple<int,int> t)
-								{
-									return ecosystem[std::get<0>(t)][std::get<1>(t)]->get_type() != OrganismType::none;
-								}),
-								neigh.end());
+			filter_neighbourhood_type(neigh, ecosystem, OrganismType::none);
+			
 			if(neigh.size() > 0)
 			{
 				int n = 0;

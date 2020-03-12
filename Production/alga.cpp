@@ -24,12 +24,9 @@ void Alga::take_action(std::vector<std::vector<std::shared_ptr<Organism> > > &ec
 		else
 		{
 			auto neigh = search_for_neighbourhood(position, std::tuple<int,int>(ecosystem.size(), ecosystem[0].size())); 
-			neigh.erase(std::remove_if(neigh.begin(), neigh.end(),
-								[ecosystem](std::tuple<int,int> t)
-								{
-									return ecosystem[std::get<0>(t)][std::get<1>(t)]->get_type() != OrganismType::none;
-								}),
-								neigh.end());
+
+			filter_neighbourhood_type(neigh, ecosystem, OrganismType::none);
+			
 			if(neigh.size() > 0)
 			{
 				int n = 0;

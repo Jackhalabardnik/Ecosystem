@@ -22,7 +22,7 @@ void Bacteria::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 		if(is_hungry())
 		{
 			bool has_algas = false;
-			for(int i=0;i<neigh.size();i++)
+			for(unsigned int i=0;i<neigh.size();i++)
 			{
 				if(ecosystem[std::get<0>(neigh[i])][std::get<1>(neigh[i])]->get_type() == OrganismType::alga)
 				{
@@ -32,21 +32,11 @@ void Bacteria::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 			
 			if(has_algas)
 			{
-				neigh.erase(std::remove_if(neigh.begin(), neigh.end(),
-								[ecosystem](std::tuple<int,int> t)
-								{
-									return ecosystem[std::get<0>(t)][std::get<1>(t)]->get_type() != OrganismType::alga;
-								}),
-								neigh.end());
+				filter_neighbourhood_type(neigh,ecosystem,OrganismType::alga);
 			}
 			else
 			{
-				neigh.erase(std::remove_if(neigh.begin(), neigh.end(),
-								[ecosystem](std::tuple<int,int> t)
-								{
-									return ecosystem[std::get<0>(t)][std::get<1>(t)]->get_type() != OrganismType::bacteria;
-								}),
-								neigh.end());
+				filter_neighbourhood_type(neigh,ecosystem,OrganismType::bacteria);
 			}
 			
 			if(neigh.size() > 0)
@@ -64,12 +54,8 @@ void Bacteria::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 		}
 		else
 		{
-			neigh.erase(std::remove_if(neigh.begin(), neigh.end(),
-								[ecosystem](std::tuple<int,int> t)
-								{
-									return ecosystem[std::get<0>(t)][std::get<1>(t)]->get_type() != OrganismType::none;
-								}),
-								neigh.end());
+			filter_neighbourhood_type(neigh,ecosystem,OrganismType::none);
+			
 			if(neigh.size() > 0)
 			{
 				int n = 0;

@@ -35,6 +35,9 @@ public:
 protected:	
 	std::vector<tuple_int > search_for_neighbourhood(tuple_int position, tuple_int ecosystem_size);
 	
+	void filter_neighbourhood_alive(std::vector<tuple_int > &neighbourhood, const std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem, bool wanted_alive);
+	void filter_neighbourhood_type(std::vector<tuple_int > &neighbourhood, const std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem, OrganismType wanted_type);
+	
 	void setup_random_generator();
 	void bound_random_generator(int n);
 	

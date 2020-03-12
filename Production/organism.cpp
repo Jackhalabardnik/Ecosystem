@@ -3,7 +3,7 @@
 using tuple_int = std::tuple<int,int>;
 
 Organism::Organism()
-: organism_type(OrganismType::none), age_limit(1), food_limit(1), age(0), food_level(0), duplicate_cost(1) {}
+: organism_type(OrganismType::none), food_level(0), age(0), food_limit(1), age_limit(1), duplicate_cost(1) {}
 
 Organism::Organism(OrganismType organism_type, const int food_limit_, const int age_limit_, const int duplicate_cost_)
 : organism_type(organism_type), food_level(0), age(0), duplicate_cost(duplicate_cost_)
@@ -111,4 +111,24 @@ void Organism::untouch()
 bool Organism::was_touched()
 {
 	return touched;
+}
+
+void Organism::filter_neighbourhood_alive(std::vector<tuple_int>& neighbourhood, const std::vector<std::vector<std::shared_ptr<Organism> > >& ecosystem, bool wanted_alive)
+{
+	neighbourhood.erase(std::remove_if(neighbourhood.begin(), neighbourhood.end(),
+									[ecosystem, wanted_alive](std::tuple<int,int> t)
+									{
+										return ecosystem[std::get<0>(t)][std::get<1>(t)]->is_alive() != wanted_alive;
+									}),
+									neighbourhood.end());
+}
+
+void Organism::filter_neighbourhood_type(std::vector<tuple_int>& neighbourhood, const std::vector<std::vector<std::shared_ptr<Organism> > >& ecosystem, OrganismType wanted_type)
+{
+	neighbourhood.erase(std::remove_if(neighbourhood.begin(), neighbourhood.end(),
+									[ecosystem, wanted_type](std::tuple<int,int> t)
+									{
+										return ecosystem[std::get<0>(t)][std::get<1>(t)]->get_type() != wanted_type;
+									}),
+									neighbourhood.end());
 }
