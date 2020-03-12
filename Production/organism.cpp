@@ -190,3 +190,22 @@ void Organism::try_to_duplicate(std::vector<tuple_int>& neighbourhood, std::vect
 		food_level -= duplicate_cost;
 	}
 }
+
+void Organism::try_to_move(std::vector<tuple_int>& neighbourhood, std::vector<std::vector<std::shared_ptr<Organism> > >& ecosystem, tuple_int old_position, std::shared_ptr<Organism> guest)
+{
+	filter_neighbourhood_type(neighbourhood, ecosystem, OrganismType::none);
+	
+	if(neighbourhood.size() > 0)
+	{
+		int n = 0;
+		if(neighbourhood.size() > 1)
+		{
+			bound_random_generator(neighbourhood.size()-1);
+			n = generator(rng);
+		}
+		
+		ecosystem[std::get<0>(neighbourhood[n])][std::get<1>(neighbourhood[n])] = guest;
+		*ecosystem[std::get<0>(neighbourhood[n])][std::get<1>(neighbourhood[n])] = *ecosystem[std::get<0>(old_position)][std::get<1>(old_position)];
+		ecosystem[std::get<0>(old_position)][std::get<1>(old_position)] = std::make_shared<Organism>();
+	}
+}

@@ -45,6 +45,8 @@ protected:
 	
 	void try_to_duplicate(std::vector<tuple_int > &neighbourhood, std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem, std::shared_ptr<Organism> new_child);
 	
+	void try_to_move(std::vector<tuple_int > &neighbourhood, std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem, tuple_int old_position, std::shared_ptr<Organism> guest);
+	
 	void setup_random_generator();
 	void bound_random_generator(int n);
 	

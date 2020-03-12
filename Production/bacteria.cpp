@@ -24,13 +24,17 @@ void Bacteria::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 			if(neighbourdhood_has_type(neigh, ecosystem, OrganismType::alga))
 			{
 				filter_neighbourhood_type(neigh,ecosystem,OrganismType::alga);
+				try_to_eat_other_organism(neigh, ecosystem);
+			}
+			else if(neighbourdhood_has_type(neigh, ecosystem, OrganismType::bacteria))
+			{
+				filter_neighbourhood_type(neigh,ecosystem,OrganismType::bacteria);
+				try_to_eat_other_organism(neigh, ecosystem);
 			}
 			else
 			{
-				filter_neighbourhood_type(neigh,ecosystem,OrganismType::bacteria);
+				try_to_move(neigh, ecosystem, position, std::make_shared<Bacteria>());
 			}
-			
-			try_to_eat_other_organism(neigh, ecosystem);
 		}
 		else
 		{
