@@ -164,7 +164,7 @@ void Organism::try_to_eat_other_organism(const std::vector<tuple_int>& neighbour
 		int n = 0;
 		if(neighbourhood.size() > 1)
 		{
-			bound_random_generator(neighbourhood.size());
+			bound_random_generator(neighbourhood.size()-1);
 			n = generator(rng);
 		}
 		
@@ -182,7 +182,7 @@ void Organism::try_to_duplicate(std::vector<tuple_int>& neighbourhood, std::vect
 		int n = 0;
 		if(neighbourhood.size() > 1)
 		{
-			bound_random_generator(neighbourhood.size());
+			bound_random_generator(neighbourhood.size()-1);
 			n = generator(rng);
 		}
 		

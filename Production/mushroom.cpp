@@ -31,13 +31,13 @@ void Mushroom::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 					int n = 0;
 					if(neigh.size() > 1)
 					{
-						bound_random_generator(neigh.size());
+						bound_random_generator(neigh.size()-1);
 						n = generator(rng);
 					}
 					
-					//ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = std::make_shared<Mushroom>();
-					//*ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = *ecosystem[std::get<0>(position)][std::get<1>(position)];
-					//ecosystem[std::get<0>(position)][std::get<1>(position)] = std::make_shared<Organism>();
+					ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = std::make_shared<Mushroom>();
+					*ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = *ecosystem[std::get<0>(position)][std::get<1>(position)];
+					ecosystem[std::get<0>(position)][std::get<1>(position)] = std::make_shared<Organism>();
 				}
 			}
 			else
