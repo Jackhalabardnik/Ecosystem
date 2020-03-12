@@ -22,33 +22,7 @@ void Mushroom::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 			
 		if(is_hungry())
 		{
-			bool has_food = false;
-			for(unsigned int i=0;i<neigh.size();i++)
-			{
-				if(ecosystem[std::get<0>(neigh[i])][std::get<1>(neigh[i])]->is_alive() == false)
-				{
-					has_food = true;
-				}
-			}
-			
-			if(has_food)
-			{
-				filter_neighbourhood_alive(neigh, ecosystem, false);
-									
-				if(neigh.size() > 0)
-				{
-					int n = 0;
-					if(neigh.size() > 1)
-					{
-						bound_random_generator(neigh.size());
-						n = generator(rng);
-					}
-					
-					ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = std::make_shared<Organism>();
-					food_level++;
-				}
-			}
-			else
+			if(is_whole_neighbourd_alive(neigh,ecosystem))
 			{
 				filter_neighbourhood_type(neigh, ecosystem, OrganismType::none);
 				
@@ -65,6 +39,12 @@ void Mushroom::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 					//*ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = *ecosystem[std::get<0>(position)][std::get<1>(position)];
 					//ecosystem[std::get<0>(position)][std::get<1>(position)] = std::make_shared<Organism>();
 				}
+			}
+			else
+			{
+				filter_neighbourhood_alive(neigh, ecosystem, false);
+				
+				try_to_eat_other_organism(neigh,ecosystem);
 			}
 		}
 		else

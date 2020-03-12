@@ -38,6 +38,11 @@ protected:
 	void filter_neighbourhood_alive(std::vector<tuple_int > &neighbourhood, const std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem, bool wanted_alive);
 	void filter_neighbourhood_type(std::vector<tuple_int > &neighbourhood, const std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem, OrganismType wanted_type);
 	
+	bool neighbourdhood_has_type(const std::vector<tuple_int > &neighbourhood, const std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem, OrganismType wanted_type);
+	bool is_whole_neighbourd_alive(const std::vector<tuple_int > &neighbourhood, const std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem);
+	
+	void try_to_eat_other_organism(const std::vector<tuple_int > &neighbourhood, std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem);
+	
 	void setup_random_generator();
 	void bound_random_generator(int n);
 	

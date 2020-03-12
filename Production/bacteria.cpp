@@ -21,16 +21,7 @@ void Bacteria::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 		
 		if(is_hungry())
 		{
-			bool has_algas = false;
-			for(unsigned int i=0;i<neigh.size();i++)
-			{
-				if(ecosystem[std::get<0>(neigh[i])][std::get<1>(neigh[i])]->get_type() == OrganismType::alga)
-				{
-					has_algas = true;
-				}
-			}
-			
-			if(has_algas)
+			if(neighbourdhood_has_type(neigh, ecosystem, OrganismType::alga))
 			{
 				filter_neighbourhood_type(neigh,ecosystem,OrganismType::alga);
 			}
@@ -39,18 +30,7 @@ void Bacteria::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 				filter_neighbourhood_type(neigh,ecosystem,OrganismType::bacteria);
 			}
 			
-			if(neigh.size() > 0)
-			{
-				int n = 0;
-				if(neigh.size() > 1)
-				{
-					bound_random_generator(neigh.size());
-					n = generator(rng);
-				}
-				
-				ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = std::make_shared<Organism>();
-				food_level++;
-			}
+			try_to_eat_other_organism(neigh, ecosystem);
 		}
 		else
 		{

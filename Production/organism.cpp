@@ -132,3 +132,43 @@ void Organism::filter_neighbourhood_type(std::vector<tuple_int>& neighbourhood, 
 									}),
 									neighbourhood.end());
 }
+
+bool Organism::neighbourdhood_has_type(const std::vector<tuple_int>& neighbourhood, const std::vector<std::vector<std::shared_ptr<Organism> > >& ecosystem, OrganismType wanted_type)
+{
+	for(unsigned int i=0;i<neighbourhood.size();i++)
+	{
+		if(ecosystem[std::get<0>(neighbourhood[i])][std::get<1>(neighbourhood[i])]->get_type() == wanted_type)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Organism::is_whole_neighbourd_alive(const std::vector<tuple_int>& neighbourhood, const std::vector<std::vector<std::shared_ptr<Organism> > >& ecosystem)
+{
+	for(unsigned int i=0;i<neighbourhood.size();i++)
+	{
+		if(ecosystem[std::get<0>(neighbourhood[i])][std::get<1>(neighbourhood[i])]->is_alive() == false)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+void Organism::try_to_eat_other_organism(const std::vector<tuple_int>& neighbourhood, std::vector<std::vector<std::shared_ptr<Organism> > >& ecosystem)
+{
+	if(neighbourhood.size() > 0)
+	{
+		int n = 0;
+		if(neighbourhood.size() > 1)
+		{
+			bound_random_generator(neighbourhood.size());
+			n = generator(rng);
+		}
+		
+		ecosystem[std::get<0>(neighbourhood[n])][std::get<1>(neighbourhood[n])] = std::make_shared<Organism>();
+		food_level++;
+	}
+}
