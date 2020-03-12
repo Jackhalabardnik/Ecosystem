@@ -34,20 +34,7 @@ void Bacteria::take_action(std::vector<std::vector<std::shared_ptr<Organism> > >
 		}
 		else
 		{
-			filter_neighbourhood_type(neigh,ecosystem,OrganismType::none);
-			
-			if(neigh.size() > 0)
-			{
-				int n = 0;
-				if(neigh.size() > 1)
-				{
-					bound_random_generator(neigh.size());
-					n = generator(rng);
-				}
-				
-				ecosystem[std::get<0>(neigh[n])][std::get<1>(neigh[n])] = std::make_shared<Bacteria>();
-				food_level -= duplicate_cost;
-			}
+			try_to_duplicate(neigh, ecosystem, std::make_shared<Bacteria>());
 		}
 	}
 }

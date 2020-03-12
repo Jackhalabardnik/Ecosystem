@@ -172,3 +172,21 @@ void Organism::try_to_eat_other_organism(const std::vector<tuple_int>& neighbour
 		food_level++;
 	}
 }
+
+void Organism::try_to_duplicate(std::vector<tuple_int>& neighbourhood, std::vector<std::vector<std::shared_ptr<Organism> > >& ecosystem, std::shared_ptr<Organism> new_child)
+{
+	filter_neighbourhood_type(neighbourhood, ecosystem, OrganismType::none);
+			
+	if(neighbourhood.size() > 0)
+	{
+		int n = 0;
+		if(neighbourhood.size() > 1)
+		{
+			bound_random_generator(neighbourhood.size());
+			n = generator(rng);
+		}
+		
+		ecosystem[std::get<0>(neighbourhood[n])][std::get<1>(neighbourhood[n])] = new_child;
+		food_level -= duplicate_cost;
+	}
+}

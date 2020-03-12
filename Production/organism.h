@@ -43,6 +43,8 @@ protected:
 	
 	void try_to_eat_other_organism(const std::vector<tuple_int > &neighbourhood, std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem);
 	
+	void try_to_duplicate(std::vector<tuple_int > &neighbourhood, std::vector<std::vector<std::shared_ptr<Organism> > > &ecosystem, std::shared_ptr<Organism> new_child);
+	
 	void setup_random_generator();
 	void bound_random_generator(int n);
 	
